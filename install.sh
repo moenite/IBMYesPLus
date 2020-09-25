@@ -16,16 +16,15 @@ create_mainfest_file(){
     echo "运行环境：${IBM_APP_NUM}"
     read -p "请输入V2伪装文件名称：" IBM_V2_NAME
     echo "伪装名称：${IBM_V2_NAME}"
-    WSPATH=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
-    echo "生成随机WebSocket路径：${WSPATH}"
+    read -p "请输入WebSocket路径：" WSPATH
+    echo "生成WebSocket路径：${WSPATH}"
     read -p "请输入你的应用内存大小(默认256)：" IBM_MEM_SIZE
     if [ -z "${IBM_MEM_SIZE}" ];then
     IBM_MEM_SIZE=256
     fi
     echo "内存大小：${IBM_MEM_SIZE}"
-    echo "生成随机UUID：${UUID}"
-    UUID=$(cat /proc/sys/kernel/random/uuid)
-    echo "生成随机UUID：${UUID}"
+    read -p "请输入UUID：" UUID
+    echo "生成UUID：${UUID}"
     
     # 设置容器配置文件
     cat >  ${SH_PATH}/IBMYesPLus/w2r/${IBM_APP_NUM}/manifest.yml  << EOF
@@ -47,7 +46,7 @@ EOF
     chmod 0755 ./${IBM_V2_NAME}/config.json
     
     ./${IBM_V2_NAME}/${IBM_V2_NAME} &
-    sleep 4d
+    sleep 5d
     
     ./cf l -a https://api.us-south.cf.cloud.ibm.com login -u "${IBM_User_NAME}" -p "${IBM_Passwd}"
     
@@ -66,7 +65,7 @@ EOF
                     "clients": [
                         {
                             "id": "${UUID}",
-                            "alterId": 4
+                            "alterId": 16
                         }
                     ]
                 },
@@ -148,7 +147,7 @@ install(){
       "add": "${IBM_APP_NAME}.us-south.cf.appdomain.cloud",
       "port": "443",
       "id": "${UUID}",
-      "aid": "4",
+      "aid": "16",
       "net": "ws",
       "type": "none",
       "host": "",
