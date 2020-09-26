@@ -70,24 +70,25 @@ EOF
                     ]
                 },
                 "streamSettings": {
-               		"network":"ws",
-                	"wsSettings": {
+               	    "network":"ws",
+                    "wsSettings": {
                         "path": "${WSPATH}"
                     }
                 }
             }
         ],
-		"dns": {
-    		"servers": [
-        		"8.8.8.8",
-         		"8.8.4.4"
-        	]
-    	},
+	"dns": {
+	    "servers": [
+        	"8.8.8.8",
+         	"8.8.4.4",
+		"localhost"
+            ]
+	},
         "outbounds": [
             {
                 "protocol": "freedom",
                 "settings": {
-                	"domainStrategy": "UseIP"
+                    "domainStrategy": "UseIP"
             	}
             }
         ]
