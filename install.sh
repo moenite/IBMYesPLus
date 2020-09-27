@@ -12,11 +12,17 @@ create_mainfest_file(){
     ibmcloud login -a "https://cloud.ibm.com" -r "us-south" -u "${IBM_User_NAME}" -p "${IBM_Passwd}"
     read -p "请输入你的应用名称：" IBM_APP_NAME
     echo "应用名称：${IBM_APP_NAME}"
-    read -p "请输入你的运行环境：" IBM_APP_NUM
+    read -p "请输入你的运行环境(默认Python)：" IBM_APP_NUM
+    if [ -z "${IBM_APP_NUM}" ];then
+    IBM_APP_NUM=2
+    fi
     echo "运行环境：${IBM_APP_NUM}"
     read -p "请输入V2伪装文件名称：" IBM_V2_NAME
     echo "伪装名称：${IBM_V2_NAME}"
-    read -p "请输入WebSocket路径：" WSPATH
+    read -p "请输入WebSocket路径(默认/)：" WSPATH
+    if [ -z "${WSPATH}" ];then
+    WSPATH=/
+    fi
     echo "生成WebSocket路径：${WSPATH}"
     read -p "请输入你的应用内存大小(默认256)：" IBM_MEM_SIZE
     if [ -z "${IBM_MEM_SIZE}" ];then
@@ -79,16 +85,16 @@ EOF
         ],
 	"dns": {
 	    "servers": [
+                "localhost",
         	"8.8.8.8",
-         	"8.8.4.4",
-		"localhost"
+         	"8.8.4.4"
             ]
 	},
         "outbounds": [
             {
                 "protocol": "freedom",
                 "settings": {
-                    "domainStrategy": "UseIP"
+                    "domainStrategy": "UseIPv4"
             	}
             }
         ]
